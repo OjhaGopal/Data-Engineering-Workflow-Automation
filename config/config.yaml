@@ -1,0 +1,84 @@
+# Data Engineering Pipeline Configuration
+
+# Project Settings
+project:
+  name: "data-engineering-pipeline"
+  version: "1.0.0"
+  description: "End-to-end data engineering workflow automation"
+
+# Data Paths
+paths:
+  raw_data: "data/raw"
+  processed_data: "data/processed"
+  features_data: "data/features"
+  models: "data/models"
+  logs: "logs"
+
+# Data Ingestion
+ingestion:
+  chunk_size: 100000  # Process 100k rows at a time
+  n_jobs: -1  # Use all available cores
+  validate_schema: true
+  handle_duplicates: true
+
+# Data Transformation
+transformation:
+  missing_value_strategy: "mean"  # mean, median, mode, drop
+  outlier_method: "iqr"  # iqr, zscore, isolation_forest
+  outlier_threshold: 1.5
+  normalize: true
+  encoding_strategy: "onehot"  # onehot, label, target
+
+# Feature Engineering
+features:
+  selection_method: "importance"  # importance, correlation, rfe
+  n_features: 20
+  create_interactions: true
+  polynomial_degree: 2
+  scale_features: true
+  scaler_type: "standard"  # standard, minmax, robust
+
+# Model Training
+model:
+  target_column: "target"
+  test_size: 0.2
+  validation_size: 0.2
+  random_state: 42
+  cv_folds: 5
+  
+  # Models to train
+  models:
+    - linear_regression
+    - ridge
+    - random_forest
+    - xgboost
+    - lightgbm
+  
+  # Hyperparameter tuning
+  tuning:
+    method: "random_search"  # grid_search, random_search, bayesian
+    n_iterations: 50
+    scoring: "r2"
+
+# MLflow Configuration
+mlflow:
+  tracking_uri: "mlruns"
+  experiment_name: "data-engineering-pipeline"
+  artifact_location: "mlartifacts"
+  log_models: true
+  log_params: true
+  log_metrics: true
+
+# Logging
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "logs/pipeline.log"
+  console: true
+
+# Performance
+performance:
+  batch_size: 50000
+  use_multiprocessing: true
+  cache_transformations: true
+  memory_limit_gb: 8
