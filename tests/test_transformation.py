@@ -67,7 +67,9 @@ class TestFeatureScaler:
         assert np.isclose(result['col1'].std(), 1, atol=0.1)
     
     def test_minmax_scaler(self):
-        """Test min-max scaling."""
+        """
+        Verify that FeatureScaler with method 'minmax' scales a numeric column to the [0, 1] range.
+        """
         df = pd.DataFrame({
             'col1': [1, 2, 3, 4, 5]
         })
