@@ -104,6 +104,15 @@ class TestBatchProcessor:
         
         # Define transform function
         def transform(df):
+            """
+            Add a new column 'col2' to the provided DataFrame containing twice the values of 'col1'.
+            
+            Parameters:
+                df (pandas.DataFrame): Input DataFrame that must contain a numeric 'col1' column. The DataFrame is modified in place.
+            
+            Returns:
+                pandas.DataFrame: The same DataFrame instance with a new 'col2' column equal to `df['col1'] * 2`.
+            """
             df['col2'] = df['col1'] * 2
             return df
         

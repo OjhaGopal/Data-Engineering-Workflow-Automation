@@ -123,14 +123,14 @@ class DataPipeline:
     
     def engineer_features(self, df: pd.DataFrame, target_col: str) -> pd.DataFrame:
         """
-        Engineer features.
+        Encode categorical features and optionally add interaction and polynomial features to the input DataFrame.
         
-        Args:
-            df: Input DataFrame
-            target_col: Target column name
-            
+        Parameters:
+            df (pd.DataFrame): Input DataFrame containing features and the target column.
+            target_col (str): Name of the target column to exclude from feature transformations.
+        
         Returns:
-            DataFrame with engineered features
+            pd.DataFrame: DataFrame with encoded categorical columns and any newly created interaction or polynomial features. The returned DataFrame is also stored in self.data['engineered'].
         """
         self.logger.info("Engineering features")
         
