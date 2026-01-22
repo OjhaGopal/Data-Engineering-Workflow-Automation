@@ -136,6 +136,15 @@ class DataPipeline:
         
         # Separate features and target
         feature_cols = [col for col in df.columns if col != target_col]
+        
+        # Encode categorical features first
+        categorical_cols = df[feature_cols].select_dtypes(include=['object', 'category']).columns.tolist()
+        if categorical_cols:
+            self.logger.info(f"Encoding {len(categorical_cols)} categorical features")
+            encoder = CategoricalEncoder(method='label', logger=self.logger)
+            df = encoder.fit_transform(df, columns=categorical_cols)
+        
+        # Get numeric columns after encoding
         numeric_cols = df[feature_cols].select_dtypes(include=[np.number]).columns.tolist()
         
         # Create interaction features if configured
